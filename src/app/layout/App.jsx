@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { Container } from 'semantic-ui-react';
 
-function App() {
+import EventDashboard from '../../features/events/eventDashboard/EventDashboard';
+import Navbar from '../../features/nav/Navbar';
+
+const App = () => {
   return (
-    <div>
-      <h1>Hello world</h1>
-    </div>
+    <Fragment>
+      <Navbar />
+      <Container className='main'>
+        <EventDashboard />
+      </Container>
+    </Fragment>
   );
-}
+};
 
 export default App;
