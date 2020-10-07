@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 
 import Navbar from '../../features/nav/Navbar';
@@ -9,6 +9,8 @@ import EventDetailedPage from '../../features/events/eventDetailed/EventDetailed
 import EventForm from '../../features/events/eventForm/EventForm';
 
 const App = () => {
+  const { key } = useLocation();
+
   return (
     <Fragment>
       <Switch>
@@ -22,8 +24,9 @@ const App = () => {
                 <Switch>
                   <Route path='/events' exact component={EventDashboard} />
                   <Route
-                    path={['/events/new', '/events/edit']}
+                    path={['/events/new', '/events/:id/edit']}
                     component={EventForm}
+                    key={key}
                   />
                   <Route path='/events/:id' component={EventDetailedPage} />
                 </Switch>

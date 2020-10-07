@@ -8,7 +8,7 @@ const SignedOutMenu = ({ setAuth }) => {
   return (
     <Menu.Item position='right'>
       <Image avatar spaced='right' src='/assets/user.png' />
-      <Dropdown pointing='top left' text='Pacifique'>
+      <Dropdown pointing='top right' text='Pacifique'>
         <Dropdown.Menu>
           <Dropdown.Item
             as={Link}

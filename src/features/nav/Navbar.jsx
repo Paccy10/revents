@@ -19,9 +19,9 @@ const Navbar = ({ setFormOpen }) => {
           />
           Re-events
         </Menu.Item>
-        <Menu.Item name='Events' as={NavLink} to='/events' />
+        <Menu.Item name='Events' as={NavLink} to='/events' exact />
         {auth && (
-          <Menu.Item as={NavLink} to='/events/new'>
+          <Menu.Item as={NavLink} to='/events/new' exact>
             <Button
               onClick={setFormOpen}
               positive
