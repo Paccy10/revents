@@ -16,7 +16,7 @@ const Navbar = ({ setFormOpen }) => {
         <Menu.Item name='Events' />
         <Menu.Item>
           <Button
-            onClick={() => setFormOpen(true)}
+            onClick={setFormOpen}
             positive
             inverted
             content='Create Event'
