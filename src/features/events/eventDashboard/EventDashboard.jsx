@@ -1,26 +1,19 @@
 import React, { useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 
-import EventForm from '../eventForm/EventForm';
 import EventList from './EventList';
 import { sampleData } from '../../../app/api/sampleData';
 
-const EventDashboard = ({
-  formOpen,
-  setFormOpen,
-  selectEvent,
-  selectedEvent,
-}) => {
+const EventDashboard = () => {
   const [events, setEvents] = useState(sampleData);
 
-  const handleCreateEvent = (event) => {
-    setEvents([...events, event]);
-  };
+  // const handleCreateEvent = (event) => {
+  //   setEvents([...events, event]);
+  // };
 
-  const handleUpdateEvent = (event) => {
-    setEvents(events.map((evt) => (evt.id === event.id ? event : evt)));
-    selectEvent(null);
-  };
+  // const handleUpdateEvent = (event) => {
+  //   setEvents(events.map((evt) => (evt.id === event.id ? event : evt)));
+  // };
 
   const handleDeleteEvent = (eventId) => {
     setEvents(events.filter((event) => event.id !== eventId));
@@ -29,23 +22,10 @@ const EventDashboard = ({
   return (
     <Grid>
       <Grid.Column width={10}>
-        <EventList
-          events={events}
-          selectEvent={selectEvent}
-          deleteEvent={handleDeleteEvent}
-        />
+        <EventList events={events} deleteEvent={handleDeleteEvent} />
       </Grid.Column>
       <Grid.Column width={6}>
-        {formOpen && (
-          <EventForm
-            setFormOpen={setFormOpen}
-            setEvents={setEvents}
-            createEvent={handleCreateEvent}
-            selectedEvent={selectedEvent}
-            updateEvent={handleUpdateEvent}
-            key={selectedEvent ? selectedEvent.id : null}
-          />
-        )}
+        <h2>Event filters</h2>
       </Grid.Column>
     </Grid>
   );

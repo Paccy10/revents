@@ -1,8 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Dropdown, Image, Menu } from 'semantic-ui-react';
 
-const SignedOutMenu = () => {
+const SignedOutMenu = ({ setAuth }) => {
+  const history = useHistory();
+
   return (
     <Menu.Item position='right'>
       <Image avatar spaced='right' src='/assets/user.png' />
@@ -15,7 +17,14 @@ const SignedOutMenu = () => {
             icon='plus'
           />
           <Dropdown.Item text='My Profile' icon='user' />
-          <Dropdown.Item text='Logout' icon='power' />
+          <Dropdown.Item
+            text='Logout'
+            icon='power'
+            onClick={() => {
+              setAuth(false);
+              history.push('/');
+            }}
+          />
         </Dropdown.Menu>
       </Dropdown>
     </Menu.Item>
