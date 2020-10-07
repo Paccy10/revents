@@ -24,15 +24,24 @@ const App = () => {
 
   return (
     <Fragment>
-      <Navbar setFormOpen={handleFormOpen} />
-      <Container className='main'>
-        <Switch>
-          <Route path='/' exact component={HomePage} />
-          <Route path='/events' exact component={EventDashboard} />
-          <Route path='/events/new' exact component={EventForm} />
-          <Route path='/events/:id' component={EventDetailedPage} />
-        </Switch>
-      </Container>
+      <Switch>
+        <Route path='/' exact component={HomePage} />
+        <Route
+          path={'/(.+)'}
+          render={() => (
+            <Fragment>
+              <Navbar setFormOpen={handleFormOpen} />
+              <Container className='main'>
+                <Switch>
+                  <Route path='/events' exact component={EventDashboard} />
+                  <Route path='/events/new' exact component={EventForm} />
+                  <Route path='/events/:id' component={EventDetailedPage} />
+                </Switch>
+              </Container>
+            </Fragment>
+          )}
+        />
+      </Switch>
     </Fragment>
   );
 };
