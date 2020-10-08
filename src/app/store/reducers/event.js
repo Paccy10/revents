@@ -5,7 +5,7 @@ const initialState = {
   events: sampleData,
 };
 
-export default function (state = initialState, { type, payload }) {
+export default function eventReducer(state = initialState, { type, payload }) {
   switch (type) {
     case CREATE_EVENT:
       return {

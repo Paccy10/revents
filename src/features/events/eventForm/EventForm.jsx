@@ -60,33 +60,48 @@ const EventForm = ({ match, history }) => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            <Form className='ui form'>
-              <Header color='teal' content='Event Details' />
-              <AppTextInput name='title' placeholder='Event Title' />
-              <AppSelectInput
-                name='category'
-                placeholder='Category'
-                options={categoryData}
-              />
-              <AppTextArea
-                name='description'
-                placeholder='Event Description'
-                rows={3}
-              />
-              <Header color='teal' content='Event Location Details' />
-              <AppTextInput name='city' placeholder='City' />
-              <AppTextInput name='venue' placeholder='Venue' />
-              <AppDatePicker
-                name='date'
-                placeholderText='Date'
-                timeFormat='HH:mm'
-                showTimeSelect
-                timeCaption='time'
-                dateFormat='MMMM d, yyyy h:mm a'
-              />
-              <Button type='submit' floated='right' positive content='Submit' />
-              <Button as={Link} to='/events' floated='right' content='Cancel' />
-            </Form>
+            {({ isSubmitting, dirty, isValid }) => (
+              <Form className='ui form'>
+                <Header color='teal' content='Event Details' />
+                <AppTextInput name='title' placeholder='Event Title' />
+                <AppSelectInput
+                  name='category'
+                  placeholder='Category'
+                  options={categoryData}
+                />
+                <AppTextArea
+                  name='description'
+                  placeholder='Event Description'
+                  rows={3}
+                />
+                <Header color='teal' content='Event Location Details' />
+                <AppTextInput name='city' placeholder='City' />
+                <AppTextInput name='venue' placeholder='Venue' />
+                <AppDatePicker
+                  name='date'
+                  placeholderText='Date'
+                  timeFormat='HH:mm'
+                  showTimeSelect
+                  timeCaption='time'
+                  dateFormat='MMMM d, yyyy h:mm a'
+                />
+                <Button
+                  type='submit'
+                  floated='right'
+                  positive
+                  content='Submit'
+                  loading={isSubmitting}
+                  disabled={!isValid || !dirty || isSubmitting}
+                />
+                <Button
+                  as={Link}
+                  to='/events'
+                  floated='right'
+                  content='Cancel'
+                  disabled={isSubmitting}
+                />
+              </Form>
+            )}
           </Formik>
         </Segment>
       </Grid.Column>
