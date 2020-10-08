@@ -1,10 +1,25 @@
-import React, { useState } from 'react';
-import { Button, Form, Header, Segment } from 'semantic-ui-react';
+import React from 'react';
+import { Button, Grid, Header, Segment } from 'semantic-ui-react';
 import cuid from 'cuid';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 
 import { createEvent, updateEvent } from '../../../app/store/actions/event';
+import AppTextInput from '../../../app/common/form/AppTextInput';
+import AppTextArea from '../../../app/common/form/AppTextArea';
+import AppSelectInput from '../../../app/common/form/AppSelectInput';
+import { categoryData } from '../../../app/api/categoryOptions';
+
+const validationSchema = Yup.object({
+  title: Yup.string().required().label('Title'),
+  category: Yup.string().required().label('Category'),
+  description: Yup.string().required().label('Description'),
+  city: Yup.string().required().label('City'),
+  venue: Yup.string().required().label('Venue'),
+  date: Yup.string().required().label('Date'),
+});
 
 const EventForm = ({ match, history }) => {
   const selectedEvent = useSelector((state) =>
@@ -19,14 +34,8 @@ const EventForm = ({ match, history }) => {
     venue: '',
     date: '',
   };
-  const [values, setValues] = useState(initialValues);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
-  };
-
-  const handleSubmit = () => {
+  const handleSubmit = (values) => {
     selectedEvent
       ? dispatch(updateEvent({ ...selectedEvent, ...values }))
       : dispatch(
@@ -42,67 +51,38 @@ const EventForm = ({ match, history }) => {
   };
 
   return (
-    <Segment clearing>
-      <Header content={selectedEvent ? 'Edit The Event' : 'Create New Event'} />
-      <Form onSubmit={handleSubmit}>
-        <Form.Field>
-          <input
-            type='text'
-            placeholder='Event Title'
-            name='title'
-            value={values.title}
-            onChange={handleInputChange}
-          />
-        </Form.Field>
-        <Form.Field>
-          <input
-            type='text'
-            placeholder='Category'
-            name='category'
-            value={values.category}
-            onChange={handleInputChange}
-          />
-        </Form.Field>
-        <Form.Field>
-          <input
-            type='text'
-            placeholder='Description'
-            name='description'
-            value={values.description}
-            onChange={handleInputChange}
-          />
-        </Form.Field>
-        <Form.Field>
-          <input
-            type='text'
-            placeholder='City'
-            name='city'
-            value={values.city}
-            onChange={handleInputChange}
-          />
-        </Form.Field>
-        <Form.Field>
-          <input
-            type='text'
-            placeholder='Venue'
-            name='venue'
-            value={values.venue}
-            onChange={handleInputChange}
-          />
-        </Form.Field>
-        <Form.Field>
-          <input
-            type='date'
-            placeholder='Date'
-            name='date'
-            value={values.date}
-            onChange={handleInputChange}
-          />
-        </Form.Field>
-        <Button type='submit' floated='right' positive content='Submit' />
-        <Button as={Link} to='/events' floated='right' content='Cancel' />
-      </Form>
-    </Segment>
+    <Grid centered>
+      <Grid.Column mobile={16} tablet={8} computer={8}>
+        <Segment clearing>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            <Form className='ui form'>
+              <Header color='teal' content='Event Details' />
+              <AppTextInput name='title' placeholder='Event Title' />
+              <AppSelectInput
+                name='category'
+                placeholder='Category'
+                options={categoryData}
+              />
+              <AppTextArea
+                name='description'
+                placeholder='Event Description'
+                rows={3}
+              />
+              <Header color='teal' content='Event Location Details' />
+              <AppTextInput name='city' placeholder='City' />
+              <AppTextInput name='venue' placeholder='Venue' />
+              <AppTextInput name='date' placeholder='Date' type='date' />
+              <Button type='submit' floated='right' positive content='Submit' />
+              <Button as={Link} to='/events' floated='right' content='Cancel' />
+            </Form>
+          </Formik>
+        </Segment>
+      </Grid.Column>
+    </Grid>
   );
 };
 
