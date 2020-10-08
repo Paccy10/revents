@@ -10,6 +10,7 @@ import { createEvent, updateEvent } from '../../../app/store/actions/event';
 import AppTextInput from '../../../app/common/form/AppTextInput';
 import AppTextArea from '../../../app/common/form/AppTextArea';
 import AppSelectInput from '../../../app/common/form/AppSelectInput';
+import AppDatePicker from '../../../app/common/form/AppDatePicker';
 import { categoryData } from '../../../app/api/categoryOptions';
 
 const validationSchema = Yup.object({
@@ -75,7 +76,14 @@ const EventForm = ({ match, history }) => {
               <Header color='teal' content='Event Location Details' />
               <AppTextInput name='city' placeholder='City' />
               <AppTextInput name='venue' placeholder='Venue' />
-              <AppTextInput name='date' placeholder='Date' type='date' />
+              <AppDatePicker
+                name='date'
+                placeholderText='Date'
+                timeFormat='HH:mm'
+                showTimeSelect
+                timeCaption='time'
+                dateFormat='MMMM d, yyyy h:mm a'
+              />
               <Button type='submit' floated='right' positive content='Submit' />
               <Button as={Link} to='/events' floated='right' content='Cancel' />
             </Form>
